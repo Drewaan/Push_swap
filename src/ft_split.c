@@ -5,94 +5,94 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aamaya-g <aamaya-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 21:17:52 by aamaya-g          #+#    #+#             */
-/*   Updated: 2024/11/08 06:39:39 by aamaya-g         ###   ########.fr       */
+/*   Created: 2025/04/30 16:05:58 by aamaya-g          #+#    #+#             */
+/*   Updated: 2025/12/01 16:56:11 by aamaya-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../include/push_swap.h"
 
-void	*ft_free(char *str[])
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-	return (NULL);
-}
-
-int	word_count(char *str, char c)
+int	count_words(char *s, char c)
 {
 	int	count;
 
 	count = 0;
-	while (*str)
+	while (*s)
 	{
-		if ((*str != c && *(str + 1) == c) || (*str != c && !*(str + 1)))
+		if ((*s != c && *(s + 1) == c) || (*s != c && !*(s + 1)))
 			count++;
-		str++;
+		s++;
 	}
 	return (count);
 }
 
-char	*get_word(char *str, char c)
+void	*ft_free(char *arr[])
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+	return (NULL);
+}
+
+static char	*get_word(char *s, char c)
 {
 	int		i;
 	char	*word;
 
 	i = 0;
-	while (str[i] && str[i] != c)
+	while (s[i] && s[i] != c)
 		i++;
 	word = (char *)malloc(sizeof(char *) * (i + 1));
 	if (!word)
 		return (NULL);
 	i = 0;
-	while (str[i] && str[i] != c)
+	while (s[i] && s[i] != c)
 	{
-		word[i] = str[i];
+		word[i] = s[i];
 		i++;
 	}
 	word[i] = '\0';
 	return (word);
 }
 
-int	ft_strlen(char *str)
+static int	ft_strlen(char *s)
 {
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (s[i])
 		i++;
 	return (i);
 }
 
-char	**ft_split(char *str, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**arr;
 	int		i;
 	int		j;
 
-	arr = (char **)malloc(sizeof(char *) * (word_count(str, c) + 1));
+	arr = (char **)malloc(sizeof(char *) * (count_words(s, c) + 1));
 	if (!arr)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (str[i])
+	while (s[i] != '\0')
 	{
-		if (str[i] != c)
+		if (s[i] != c)
 		{
-			arr[j] = get_word(&str[i], c);
+			arr[j] = get_word(&s[i], c);
 			if (!arr[j])
 				return (ft_free(arr));
-			i = i + ft_strlen(arr[j]);
+			i += ft_strlen(arr[j]);
 			j++;
 		}
-		if (str[i] != '\0')
+		if (s[i] != '\0')
 			i++;
 	}
 	arr[j] = NULL;

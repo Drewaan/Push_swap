@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_array.c                                       :+:      :+:    :+:   */
+/*   sort_arr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aamaya-g <aamaya-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 19:41:25 by aamaya-g          #+#    #+#             */
-/*   Updated: 2024/11/08 02:02:02 by aamaya-g         ###   ########.fr       */
+/*   Created: 2025/04/30 16:08:29 by aamaya-g          #+#    #+#             */
+/*   Updated: 2025/12/01 16:56:11 by aamaya-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../include/push_swap.h"
 
-int	check_array(int *arr, int n)
+int	check_sort(int *arr, int n)
 {
 	int	i;
 
@@ -23,7 +23,49 @@ int	check_array(int *arr, int n)
 			return (0);
 		i++;
 	}
-	return (i);
+	return (1);
+}
+
+static void	sort_bubble(int *arr, int n)
+{
+	int	i;
+	int	j;
+	int	tmp;
+
+	i = 0;
+	while (i < n)
+	{
+		j = 0;
+		while (j < n - i - 1)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+				tmp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+int	*copy_sort_arr(int *arr, int n)
+{
+	int	*sort_arr;
+	int	i;
+
+	sort_arr = (int *)malloc(sizeof(int) * n);
+	if (!sort_arr)
+		return (0);
+	i = 0;
+	while (i < n)
+	{
+		sort_arr[i] = arr[i];
+		i++;
+	}
+	sort_bubble(sort_arr, n);
+	return (sort_arr);
 }
 
 int	find_index(int *arr, int n, int num)
@@ -38,46 +80,4 @@ int	find_index(int *arr, int n, int num)
 		i++;
 	}
 	return (i);
-}
-
-void	bubble(int *arr, int n)
-{
-	int	i;
-	int	j;
-	int	temp;
-
-	i = 0;
-	while (i < n)
-	{
-		j = 0;
-		while (j < n - i -1)
-		{
-			if (arr[j] > arr[j + 1])
-			{
-				temp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = temp;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-int	*copy_array(int *arr, int n)
-{
-	int	*s_arr;
-	int	i;
-
-	s_arr = (int *)malloc(sizeof(int) * n);
-	if (!s_arr)
-		return (0);
-	i = 0;
-	while (i < n)
-	{
-		s_arr[i] = arr[i];
-		i++;
-	}
-	bubble(s_arr, n);
-	return (s_arr);
 }

@@ -1,42 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_checker.c                                    :+:      :+:    :+:   */
+/*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aamaya-g <aamaya-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 21:23:35 by aamaya-g          #+#    #+#             */
-/*   Updated: 2025/01/14 17:04:47 by aamaya-g         ###   ########.fr       */
+/*   Created: 2025/04/30 16:00:41 by aamaya-g          #+#    #+#             */
+/*   Updated: 2025/12/01 16:56:11 by aamaya-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../include/push_swap.h"
 
-int	is_sign_number(char *str)
+static int	is_sign_num(char *s)
 {
-	int	flag;
+	int	flag_num;
 
-	flag = 0;
-	if (*str == '-')
-		str++;
-	while (*str && *str >= '0' && *str <= '9')
+	flag_num = 0;
+	if (*s == '-')
+		s++;
+	while (*s && *s >= '0' && *s <= '9')
 	{
-		flag++;
-		str++;
+		flag_num++;
+		s++;
 	}
-	if (*str || flag == 0)
+	if (*s || flag_num == 0)
 		return (0);
 	return (1);
 }
 
-int	check_doubles(int *arr, int n, int nb)
+static int	check_doubles(int *arr, int n, int num)
 {
 	int	i;
 
 	i = 0;
-	while (i <= n && arr[i] != nb)
+	while (i <= n && arr[i] != num)
 		i++;
-	if (i <= n -1)
+	if (i <= n - 1)
 		return (0);
 	return (1);
 }
@@ -44,28 +44,28 @@ int	check_doubles(int *arr, int n, int nb)
 int	check_errors(int n, char *argv[], int *arr)
 {
 	int		i;
-	long	nb;
+	long	num;
 
 	i = 0;
 	while (i < n)
 	{
-/* 		if (!is_sign_number(argv[i]))
+		if (!is_sign_num(argv[i]))
 		{
-			ft_putstr("Push Swap Error: negative number\n");
-			return (0);
-		} */
-		nb = ft_atol(argv[i]);
-		if (nb < -2147483648 || nb > 2147483647)
-		{
-			ft_putstr("Push Swap Error: out of limits, like your crush\n");
+			write(1, "Error\n", 6);
 			return (0);
 		}
-		if (!check_doubles(arr, i, nb))
+		num = ft_atol(argv[i]);
+		if (num < -2147483648 || num > 2147483647)
 		{
-			ft_putstr("Push Swap Error: double number\n");
+			write(1, "Error\n", 6);
 			return (0);
 		}
-		arr[i++] = nb;
+		if (!check_doubles(arr, i, num))
+		{
+			write(1, "Error\n", 6);
+			return (0);
+		}
+		arr[i++] = num;
 	}
 	return (1);
 }
