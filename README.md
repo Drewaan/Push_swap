@@ -48,3 +48,23 @@ The project is compiled using the standard `Makefile`:
 
 ```bash
 make
+```
+### Execution
+
+The push_swap program takes a list of unique integers as command-line arguments and prints the sequence of sorting operations to standard output.
+
+```bash
+
+# Example: Sorting the list 2 1 3 6 5 8
+./push_swap 2 1 3 6 5 8
+# Output: pb pb ra sa rra pa pa pa
+```
+
+### Verification (Piping to Checker)
+
+To verify that the output sequence correctly sorts the list (requires a separate checker program, usually provided by the school):
+
+```bash
+
+ARG="2 1 3 6 5 8"; ./push_swap $ARG | ./checker $ARG
+# Output: OK (if sorted) or KO (if not sorted)
